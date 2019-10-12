@@ -17,8 +17,11 @@ var (
 func init() {
 	flag.StringVar(&filename, "fn", "", "Jenkinsfile文件")
 	flag.BoolVar(&replace, "r", false, "是否替换原来的Jenkinsfile文件，默认不替换而是输出到屏幕")
-	flag.StringVar(&indent, "idt", "	", "补齐用的字符串，默认是一个制表符")
+	flag.StringVar(&indent, "idt", "    ", "补齐用的字符串，默认是4个空格")
 	flag.Parse()
+	if filename == "" {
+		panic("no filename")
+	}
 }
 
 func main() {
@@ -37,6 +40,7 @@ func main() {
 }
 
 func format(original string, indent string) (formatted string) {
+	original = strings.TrimSpace(original) //去掉首位空白
 	if original == "" || indent == "" {
 		return original
 	}
@@ -48,6 +52,7 @@ func format(original string, indent string) (formatted string) {
 	for _, line := range lines {
 		line = strings.TrimSpace(line)
 		if line == "" {
+			formatted += line + "\n"
 			continue
 		}
 
