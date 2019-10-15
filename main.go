@@ -15,13 +15,10 @@ var (
 )
 
 func init() {
-	flag.StringVar(&filename, "fn", "", "Jenkinsfile文件")
+	flag.StringVar(&filename, "fn", "./Jenkinsfile", "Jenkinsfile文件，默认解析当前目录下的")
 	flag.BoolVar(&replace, "r", false, "是否替换原来的Jenkinsfile文件，默认不替换而是输出到屏幕")
 	flag.StringVar(&indent, "idt", "    ", "补齐用的字符串，默认是4个空格")
 	flag.Parse()
-	if filename == "" {
-		panic("no filename")
-	}
 }
 
 func main() {
